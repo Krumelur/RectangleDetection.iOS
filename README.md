@@ -21,4 +21,4 @@ It is also optimized for memory and disposes everything nicely, which can be a r
 * CIPerspectiveTransformWithExtent: draw an overlay on detected ractangles
 * CIPerspectiveCorrection: apply a perspective correction to "fix" the detected rectangular images
 
-![Screenshot](screenshot.png "Screenshot")
+![Screenshot](screenshot.jpg "Screenshot")
