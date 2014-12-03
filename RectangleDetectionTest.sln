@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RectangleDetectionTest.iOS", "RectangleDetectionTest.iOS\RectangleDetectionTest.iOS.csproj", "{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		Ad-Hoc|iPhoneSimulator = Ad-Hoc|iPhoneSimulator
+		Ad-Hoc|Mixed Platforms = Ad-Hoc|Mixed Platforms
+		AppStore|Any CPU = AppStore|Any CPU
+		AppStore|iPhone = AppStore|iPhone
+		AppStore|iPhoneSimulator = AppStore|iPhoneSimulator
+		AppStore|Mixed Platforms = AppStore|Mixed Platforms
+		Debug|Any CPU = Debug|Any CPU
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Release|Any CPU = Release|Any CPU
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Release|Mixed Platforms = Release|Mixed Platforms
+		ReleaseLinux|Any CPU = ReleaseLinux|Any CPU
+		ReleaseLinux|iPhone = ReleaseLinux|iPhone
+		ReleaseLinux|iPhoneSimulator = ReleaseLinux|iPhoneSimulator
+		ReleaseLinux|Mixed Platforms = ReleaseLinux|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Ad-Hoc|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.AppStore|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|iPhone.Build.0 = Debug|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Debug|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|iPhone.ActiveCfg = Release|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|iPhone.Build.0 = Release|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|Mixed Platforms.ActiveCfg = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.Release|Mixed Platforms.Build.0 = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|Any CPU.Build.0 = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|iPhone.ActiveCfg = Release|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|iPhone.Build.0 = Release|iPhone
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|Mixed Platforms.ActiveCfg = Release|iPhoneSimulator
+		{76AA08F5-3F52-406A-AE70-E57B10E2E9F8}.ReleaseLinux|Mixed Platforms.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = RectangleDetectionTest.iOS\RectangleDetectionTest.iOS.csproj
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CocosTest.Shared\CocosTest.Shared.projitems*{252d11fe-d326-4f2b-a4fb-6f775697b937}*SharedItemsImports = 4
+		CocosTest.Shared\CocosTest.Shared.projitems*{4ba4562a-a308-43f5-8aad-e45f9b84bebf}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
