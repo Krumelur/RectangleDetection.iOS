@@ -21,4 +21,9 @@ It is also optimized for memory and disposes everything nicely, which can be a r
 * CIPerspectiveTransformWithExtent: draw an overlay on detected ractangles
 * CIPerspectiveCorrection: apply a perspective correction to "fix" the detected rectangular images
 
+This demo is inspired by:
+
+* http://www.shinobicontrols.com/blog/posts/2014/08/05/ios8-day-by-day-day-13-coreimage-detectors
+* https://github.com/xamarin/monotouch-samples/tree/master/MediaCapture
+
 ![Screenshot](screenshot.jpg "Screenshot")
