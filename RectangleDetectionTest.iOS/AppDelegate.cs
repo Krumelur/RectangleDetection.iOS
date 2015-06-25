@@ -18,7 +18,7 @@ namespace RectangleDetectionTest.iOS
 			window = new UIWindow(UIScreen.MainScreen.Bounds);
 			window.MakeKeyAndVisible();
 
-			window.RootViewController = new RectDetectController ();
+			window.RootViewController = new QrDetectController ();
 
 			return true;
 		}
