@@ -7,31 +7,32 @@ using AVFoundation;
 using CoreFoundation;
 using CoreVideo;
 using CoreMedia;
+using System.Collections.Generic;
 
 namespace RectangleDetectionTest.iOS
 {
 	/// <summary>
 	/// Shows a raw view of the video stream captured from the camera. Adds to smaller views
-	/// which shows detected rectangles and perepsctive corrected versions of the image.
+	/// which shows detected QR code and perepsctive corrected versions of the image.
 	/// </summary>
-	public class RectDetectController : UIViewController
+	public class QrDetectController : UIViewController
 	{
 		/// <summary>
 		/// Defines with how many frames per second the detection is performed.
 		/// </summary>
-		const int DETECTION_FPS = 10;
+		const int DETECTION_FPS = 20;
 
 		/// <summary>
-		/// Defines the width of the preview windows that show detected rectangles.
+		/// Defines the width of the preview windows that show detected codes.
 		/// </summary>
 		const float PREVIEW_VIEW_WIDTH = 160f;
 
 		/// <summary>
-		/// Defines the height of the preview windows that show detected rectangles.
+		/// Defines the height of the preview windows that show detected codes.
 		/// </summary>
 		const float PREVIEW_VIEW_HEIGHT = 100f;
 
-		public RectDetectController ()
+		public QrDetectController ()
 		{
 		}
 
@@ -57,22 +58,15 @@ namespace RectangleDetectionTest.iOS
 
 			// Setup detector options.
 			var options = new CIDetectorOptions {
-				Accuracy = FaceDetectorAccuracy.High,
-				// Can give a hint here about the rects to detect. 1.4 would be for A4 sheets of paper for instance.
-				AspectRatio = 1.41f,
-				
+				TrackingEnabled = true
 			};
 
-			// Create a rectangle detector. Note that you can also create QR detector or a face detector.
+			// Create a QR detector. Note that you can also create QR detector or a face detector.
 			// Most of this code will also work with other detectors (like streaming to a preview layer and grabbing images).
-			this.detector = CIDetector.CreateRectangleDetector (context: null, detectorOptions: options);
+			this.detector = CIDetector.CreateQRDetector(context: null, detectorOptions: options);
 
 			// Create the session. The AVCaptureSession is the managing instance of the whole video handling.
-			var captureSession = new AVCaptureSession ()
-			{ 
-				// Defines what quality we want to use for the images we grab. Photo gives highest resolutions.
-				SessionPreset = AVCaptureSession.PresetPhoto
-			};
+			var captureSession = new AVCaptureSession ();
 
 			// Find a suitable AVCaptureDevice for video input.
 			var device = AVCaptureDevice.DefaultDeviceWithMediaType(AVMediaType.Video);
@@ -144,7 +138,7 @@ namespace RectangleDetectionTest.iOS
 			device.ActiveVideoMaxFrameDuration = new CMTime(1, DETECTION_FPS);
 			device.UnlockForConfiguration ();
 
-			// Put a small image view at the top left that shows the live image with the detected rectangle(s).
+			// Put a small image view at the top left that shows the live image with the detected code(s).
 			this.imageViewOverlay = new UIImageView
 			{ 
 				ContentMode = UIViewContentMode.ScaleAspectFit,
@@ -167,14 +161,14 @@ namespace RectangleDetectionTest.iOS
 			// Add some lables for information.
 			this.mainWindowLbl = new UILabel
 			{
-				Text = "Live stream from camera. Point camera to a rectangular object.",
+				Text = "Live stream from camera. Point camera to a QR Code.",
 				TextAlignment = UITextAlignment.Center
 			};
 			this.Add (this.mainWindowLbl);
 
 			this.detectionWindowLbl = new UILabel
 			{
-				Text = "Detected rectangle overlay",
+				Text = "Detected QR code overlay",
 				TextAlignment = UITextAlignment.Center
 			};
 			this.Add (this.detectionWindowLbl);
@@ -221,13 +215,13 @@ namespace RectangleDetectionTest.iOS
 
 
 		/// <summary>
-		/// Gets called by the VideoFrameSamplerDelegate if a new image has been captured. Does the rectangle detection.
+		/// Gets called by the VideoFrameSamplerDelegate if a new image has been captured. Does the QR detection.
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">Event arguments</param>
 		void HandleImageCaptured(object sender, ImageCaptureEventArgs e)
 		{
-			// Detect the rectangles in the captured image.
+			// Detect the QR codes in the captured image.
 			// Important: case CGImage to CIImage. There is an implicit cast operator from CGImage to CIImage, but if we
 			// pass the CGImage in to FeaturesInImage(), many many (implicit) CIImage instance will be created because this 
 			// method is called very often. The garbage collector cannot keep up with that and we runn out of memory.
@@ -235,56 +229,55 @@ namespace RectangleDetectionTest.iOS
 			using (CIImage inputCIImage = (CIImage)e.Image)
 			{
 				// Let the detector do its work on the image.
-				var rectangles = detector.FeaturesInImage (inputCIImage);
+				var featuresInImage = detector.FeaturesInImage (inputCIImage);
 
-				// Find the biggest rectangle. Note: in my tests I have never seen that more than one rectangle would be detected, but better be prepared.
-				nfloat maxWidth = 0f;
-				nfloat maxHeight = 0f;
-				CIRectangleFeature biggestRect = rectangles.Length > 0 ? (CIRectangleFeature)rectangles [0] : null;
+				//Console.WriteLine ("Found " + featuresInImage.Length + " features in image.");
 
-				Console.WriteLine ("Found " + rectangles.Length + " rectangles.");
+				var qrFeatures = new List<CIQRCodeFeature>();
 
-				foreach(CIRectangleFeature rect in rectangles)
+				foreach(CIFeature feature in featuresInImage)
 				{
-					Console.WriteLine ("Found rect: " + rect);
-					nfloat minX = (nfloat)Math.Min (rect.TopLeft.X, rect.BottomLeft.X);
-					nfloat minY = (nfloat)Math.Min (rect.TopLeft.Y, rect.TopRight.Y);
-					nfloat maxX = (nfloat)Math.Min (rect.TopRight.X, rect.BottomRight.X);
-					nfloat maxY = (nfloat)Math.Min (rect.BottomLeft.Y, rect.BottomRight.Y);
-
-					if (maxX - minX > maxWidth && maxY - minY > maxHeight)
+					var qrCodeFeature = feature as CIQRCodeFeature;
+					if(feature == null)
 					{
-						maxWidth = maxX - minX;
-						maxHeight = maxY - minY;
-
-						biggestRect = rect;
+						//Console.WriteLine("Skipping non-QR feature: " + feature);
+						continue;
 					}
+
+					qrFeatures.Add(qrCodeFeature);
+
+					//Console.WriteLine ("Found QR: " + qrCodeFeature);
 				}
 
-				if (biggestRect == null)
+				if (qrFeatures.Count <= 0)
 				{
-					this.InvokeOnMainThread (() => {
+				/*	this.InvokeOnMainThread (() => {
 						this.imageViewOverlay.Image = null;
 						this.imageViewPerspective.Image = null;
 					});
+					return;*/
+
 					return;
 				}
 
-				Console.WriteLine ("Highlighting: top left = " + biggestRect.TopLeft + "; top right = " + biggestRect.TopRight + "; bottom left = " + biggestRect.BottomLeft + "; bottom right = " + biggestRect.BottomRight);
+				// Handle first found code only to keep it simple.
+				var firstQrCode = qrFeatures[0];
+
+				Console.WriteLine("Found QR Code: " + firstQrCode.MessageString);
 
 				// We are not on the main thread here.
 				this.InvokeOnMainThread (() => {
 
-					// Adjust the overlay image to the corners of the detected rectangle with CIPerspectiveTransformWithExtent.
+					// Adjust the overlay image to the corners of the detected QR code with CIPerspectiveTransformWithExtent.
 					using(var dict = new NSMutableDictionary ())
 					{
 						dict.Add (key: new NSString ("inputExtent"), value: new CIVector (inputCIImage.Extent));
-						dict.Add (key: new NSString ("inputTopLeft"), value: new CIVector (biggestRect.TopLeft));
-						dict.Add (key: new NSString ("inputTopRight"), value: new CIVector (biggestRect.TopRight));
-						dict.Add (key: new NSString ("inputBottomLeft"), value: new CIVector (biggestRect.BottomLeft));
-						dict.Add (key: new NSString ("inputBottomRight"), value: new CIVector (biggestRect.BottomRight)); 
+						dict.Add (key: new NSString ("inputTopLeft"), value: new CIVector (firstQrCode.TopLeft));
+						dict.Add (key: new NSString ("inputTopRight"), value: new CIVector (firstQrCode.TopRight));
+						dict.Add (key: new NSString ("inputBottomLeft"), value: new CIVector (firstQrCode.BottomLeft));
+						dict.Add (key: new NSString ("inputBottomRight"), value: new CIVector (firstQrCode.BottomRight)); 
 
-						// Create a semi-transparent CIImage which will show the detected rectangle.
+						// Create a semi-transparent CIImage which will show the detected QR code.
 						using(var overlayCIImage = new CIImage (color: CIColor.FromRgba (red: 1.0f, green: 0f, blue: 0f, alpha: 0.5f))
 							// Size it to the source image.
 							.ImageByCroppingToRect (inputCIImage.Extent)
@@ -312,10 +305,10 @@ namespace RectangleDetectionTest.iOS
 					// Apply a perspective correction with CIPerspectiveCorrection to the detected rectangle and display in another UIImageView.
 					using(var dict = new NSMutableDictionary ())
 					{
-						dict.Add (key: new NSString ("inputTopLeft"), value: new CIVector (biggestRect.TopLeft));
-						dict.Add (key: new NSString ("inputTopRight"), value: new CIVector (biggestRect.TopRight));
-						dict.Add (key: new NSString ("inputBottomLeft"), value: new CIVector (biggestRect.BottomLeft));
-						dict.Add (key: new NSString ("inputBottomRight"), value: new CIVector (biggestRect.BottomRight)); 
+						dict.Add (key: new NSString ("inputTopLeft"), value: new CIVector (firstQrCode.TopLeft));
+						dict.Add (key: new NSString ("inputTopRight"), value: new CIVector (firstQrCode.TopRight));
+						dict.Add (key: new NSString ("inputBottomLeft"), value: new CIVector (firstQrCode.BottomLeft));
+						dict.Add (key: new NSString ("inputBottomRight"), value: new CIVector (firstQrCode.BottomRight)); 
 
 						// Use again CIImage -> CGImage -> UIImage to prevent scaling issues (see above).
 						using(var perspectiveCorrectedImage = inputCIImage.CreateByFiltering ("CIPerspectiveCorrection", dict))

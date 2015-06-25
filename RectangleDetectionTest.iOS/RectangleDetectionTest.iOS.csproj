@@ -119,10 +119,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="RectDetectController.cs" />
     <Compile Include="VideoFrameSamplerDelegate.cs" />
     <Compile Include="ImageCaptureEventArgs.cs" />
     <Compile Include="CaptureErrorEventArgs.cs" />
+    <Compile Include="QrDetectController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
